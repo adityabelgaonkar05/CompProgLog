@@ -1,46 +1,40 @@
 #include<bits/stdc++.h>
 #define int long long
 using namespace std;
+
 int32_t main()
 {
     int t; cin >> t;
     while(t--)
     {
-        int n, count = 0; cin >> n;
+        int n; cin >> n;
         string s; cin >> s;
-
-        int i = 0;
-        if(n>4)
+        int count = 0;
+        
+        for(int i = 0; i < n - 4; i++)
         {
-            while(i < n-4)
+            if(s[i] == 'm' && s[i+1] == 'a' && s[i+2] == 'p' && s[i+3] == 'i' && s[i+4] == 'e')
             {
-                if(s.substr(i, 5) == "mapie") 
-                {
-                    count++;
-                    i+=5;
-                }
-
-                else if(s.substr(i, 3) == "pie")
-                {
-                    count++;
-                    i+=3;
-                }
-
-                else if(s.substr(i, 3) == "map")
-                {
-                    count++;
-                    i+=3;
-                }
-
-                else i++;
+                s[i+2] = '0';
+                count++;
             }
-
-            if(s.substr(n-4, 3) == "map" || s.substr(n-4, 3) == "pie") count++;
-
-            cout << count << endl;
         }
 
-        else cout << 0 << endl;
+        for(int i = 0; i < n - 2; i++)
+        {
+            if(s[i] == 'p' && s[i+1] == 'i' && s[i+2] == 'e')
+            {
+                s[i+1] = '0';
+                count++;
+            }
+            else if(s[i] == 'm' && s[i+1] == 'a' && s[i+2] == 'p')
+            {
+                s[i+1] = '0';
+                count++;
+            }
+        }
+
+        cout << count << endl;
     }
     return 0;
 }

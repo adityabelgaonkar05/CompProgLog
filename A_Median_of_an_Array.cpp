@@ -9,26 +9,22 @@ int32_t main()
     {
         int n; cin >> n;
         vector<int> a(n);
-        for(int i = 0; i < n; ++i)
-        {
-            cin >> a[i];
-        }
+        for(auto &i : a) cin >> i;
 
         sort(a.begin(), a.end());
-        
-        int mid;
-        n%2 ? mid = a[n/2 + 1] : mid = a[n/2];
-        int fo;
-        for(int i = 0; i < n; ++i)
+        int mid = n%2 ? n/2 : (n-1)/2;
+        int firstoc = n;
+
+        for(int i = mid + 1; i < n; ++i)
         {
-            if(a[i] == mid)
+            if(a[i] > a[mid]) 
             {
-                fo = i;
+                firstoc = i;
                 break;
             }
         }
 
-        cout << n/2 - fo << endl;
+        cout << firstoc - mid << endl;
     }
 
     return 0;

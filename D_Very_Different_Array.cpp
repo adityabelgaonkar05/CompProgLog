@@ -28,8 +28,8 @@ int32_t main()
                 // traversebacka = n-i-1;
                 // traversebackb = m-i-1;
 
-                // cout << a[i] << " " << b[m-1-i] << endl;
-                // cout << a[n-i-1] << " " << b[i] << endl;
+                cout << a[i] << " " << b[m-1-i] << endl;
+                cout << a[n-i-1] << " " << b[i] << endl;
             }
         }
 
@@ -51,8 +51,8 @@ int32_t main()
                 // traversebacka = n-i-1;
                 // traversebackb = m-i-1;
 
-                // cout << a[i] << " " << b[m-1-i] << endl;
-                // cout << a[n-i-1] << " " << b[i] << endl;
+                cout << a[i] << " " << b[m-1-i] << endl;
+                cout << a[n-i-1] << " " << b[i] << endl;
             }
         }
 
