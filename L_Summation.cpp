@@ -3,20 +3,18 @@
 #define ab adityabelgaonkar
 using namespace std;
 
-void rec(vector<int> &a, int n)
+int sum(vector<int> &a, int i, int s)
 {
-    if(n == -1) return;
-    if(n%2 == 0) cout << a[n] << " ";
-    rec(a, n-1);
+    if(i == a.size()) return s;
+    return sum(a, i+1, s+a[i]);
 }
 
 int32_t main()
 {
     int n; cin >> n;
     vector<int> a(n);
-    for(int i = 0; i < n; ++i) cin >> a[i];
-
-    rec(a, n-1);
+    for(auto &i : a) cin >> i;
+    cout << sum(a, 0, 0);
 
     return 0;
 }
