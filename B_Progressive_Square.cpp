@@ -9,56 +9,33 @@ int32_t main()
     while(t--)
     {
         int n, c, d; cin >> n >> c >> d;
-        vector<int> a(n*n);
+        vector<int> inp(n*n);
+        for(auto &i : inp) cin >> i;
+        vector<vector<int>> a(n, vector<int>(n));
+        int curr = *min_element(inp.begin(), inp.end());
 
-        for(int i = 0; i < n*n; i++)
-            cin >> a[i];
+        for(int i = 0; i < n; ++i)
+        {
+            a[i][0] = curr;
+            curr += c;
+        }
+
+        for(int i = 0; i < n; ++i)
+        {
+            curr = a[i][0] + d;
+            for(int j = 1; j < n; ++j)
+            {
+                a[i][j] = curr;
+                curr += d;
+            }
+        }
+
+        map<int, int> input, self;
+        for(auto i : inp) input[i]++;
+        for(auto i : a) for(auto x : i) self[x]++;
         
-        sort(a.begin(), a.end());
-
-        bool cond = 0;
-
-        vector<vector<int>> b;
-
-        for(int i = 0; i < n; ++i)
-        {
-            vector<int> temp;
-            for(int j = 0; j < n; ++j)
-            {
-                temp.push_back(a[j]);
-            }
-
-            b.push_back(temp);
-        }
-
-        for(int i = 0; i < n; ++i)
-        {
-            for(int j = 0; j < n; ++j)
-            {
-                if(i < n-1)
-                {
-                    if(b[i][j] + c != b[i+1][j])
-                    {
-                        cond = 1;
-                        break;
-                    }
-                }
-
-                if(j < n-1)
-                {
-                    if(b[i][j] + d != b[i][j+1])
-                    {
-                        cond = 1;
-                        break;
-                    }
-                }
-            }
-        }
-
-        if(cond)
-            cout << "No" << endl;
-        else
-            cout << "Yes" << endl;
+        if(equal(input.begin(), input.end(), self.begin(), self.end())) cout << "YES" << "\n";
+        else cout << "NO" << "\n";
     }
 
     return 0;

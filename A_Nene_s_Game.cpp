@@ -12,8 +12,11 @@ int32_t main()
         vector<int> a(k);
         for(auto &i : a) cin >> i;
         vector<int> b(q);
-        for(auto &i : a) cin >> i;
+        for(auto &i : b) cin >> i;
         
+        int minelk = *min_element(a.begin(), a.end());
+        for(auto i : b) cout << min(minelk - 1, i) << " ";
+        cout << "\n";
     }
 
     return 0;

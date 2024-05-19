@@ -1,9 +1,47 @@
 #include<bits/stdc++.h>
 #define int long long
 #define ab adityabelgaonkar
-#define f0n for(int i = 0; i < n; ++i)
-#define pow109 1000000007
 using namespace std;
+
+const int pow109 = 1e9 + 7; 
+
+//TRY AGAIN LATER BUT IMPROVED
+
+//Kadanes template
+int maxSubArraySum(vector<int> a, int size)
+{
+    int max_so_far = INT_MIN, max_ending_here = 0;
+
+    for (int i = 0; i < size; i++) {
+        max_ending_here = (max_ending_here + a[i])%pow109;
+        if (max_so_far < max_ending_here)
+            max_so_far = max_ending_here;
+        
+        max_so_far%=pow109;
+
+        if (max_ending_here < 0)
+            max_ending_here = 0;
+    }
+    return max_so_far;
+}
+
+int summation(vector<int> a)
+{
+    int sum = 0;
+    for(int i = 0; i < a.size(); ++i)
+    {
+        sum += a[i];
+        if (sum < 0)
+            sum += pow109;
+
+        sum%=pow109;
+    }
+
+    if (sum < 0)
+        sum += pow109;
+
+    return sum%pow109;
+}
 
 int32_t main()
 {
@@ -12,33 +50,39 @@ int32_t main()
     {
         int n, k; cin >> n >> k;
         vector<int> a(n);
-        f0n cin >> a[i];
+        for(auto &i : a) cin >> i;
+        vector<int> b(a.begin(), a.end());
 
-        int ind = max_element(a.begin(), a.end()) - a.begin();
-        int biggest = a[ind]%pow109;
-        int secondbiggest = INT64_MIN;
-        int sum = 0;
-
-        for(int i = 0; i < n; ++i)
+        for(int i = 1; i < n; ++i)
         {
-            if(i != ind) secondbiggest = max(secondbiggest, a[i]);
-            sum += a[i];
+            b[i] += b[i-1];
         }
 
-        sum%=pow109;
+        int largest = maxSubArraySum(a, a.size() + 0ll);
 
-        if(secondbiggest + biggest > 0) 
+        k--;
+        b.push_back(max(0ll, b[n-1] + largest));
+        a.push_back(max(0ll, largest));
+
+        if(k)
         {
-            for(int i = 0; i < k; ++i)
+            while(k--) 
             {
-                sum += secondbiggest%pow109 + biggest%pow109;
-                int temp = biggest%pow109;
-                biggest += secondbiggest%pow109;
-                secondbiggest = temp%pow109;
+                b.push_back(max(0ll, (b[b.size()-1])%pow109));
+                a.push_back(max(0ll, b[b.size()-1]));
             }
+
+            // for(auto i : a) cout << i << " ";
+            // cout << endl; //here
+
+            cout << accumulate(a.begin(), a.end(), 0) << "\n";
         }
 
-        cout << sum%pow109 << endl;
+        else 
+        {
+            // for(auto i : a) cout  << i << " ";  //debug
+            cout << accumulate(a.begin(), a.end(), 0) << "\n";
+        }
     }
 
     return 0;
