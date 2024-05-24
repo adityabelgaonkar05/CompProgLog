@@ -25,6 +25,9 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "cstdlib": "cpp",
-        "type_traits": "cpp"
+        "type_traits": "cpp",
+        "bitset": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }
