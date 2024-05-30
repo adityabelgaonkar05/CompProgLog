@@ -28,6 +28,7 @@
         "type_traits": "cpp",
         "bitset": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "complex": "cpp"
     }
 }

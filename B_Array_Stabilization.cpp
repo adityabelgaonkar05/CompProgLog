@@ -12,18 +12,9 @@ int32_t main()
         cin >> a[i];
     }
 
-    int maxel = *max_element(a.begin(), a.end());
-    int minel = *min_element(a.begin(), a.end());
-    int secondmax = INT_MIN;
-    int secondmin = INT_MAX;
+    sort(a.begin(),a.end());
 
-    for(int i = 0; i < n; ++i)
-    {
-        if(a[i] != maxel) secondmax = max(secondmax, a[i]);
-        if(a[i] != minel) secondmin = min(secondmin, a[i]);
-    }    
-
-    cout << min(secondmax - minel, maxel - secondmin) << "\n";
+    cout << min(a[n-2] - a[0], a[n-1] - a[1]) << "\n";
 
     return 0;
 }
