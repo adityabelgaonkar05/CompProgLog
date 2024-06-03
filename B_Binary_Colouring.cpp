@@ -3,19 +3,6 @@
 #define ab adityabelgaonkar
 using namespace std;
 
-int calcval(vector<int> a)
-{
-    int val = 0;
-    int i = 0;
-
-    for(auto x : a)
-    {
-        val += x * pow(2, i); 
-    }
-
-    return val;
-}
-
 int32_t main()
 {
     int t; cin >> t;
@@ -23,39 +10,43 @@ int32_t main()
     {
         int x; cin >> x;
 
-        int closestsetbit = 0;
+        string s;
 
-        for(int i = 31; i >= 0; --i)
+        while(x)
         {
-            if(1<<i & x)
+            s += to_string(x%2);
+            x/=2;
+        }
+
+        bool flag = 0;
+
+        for(int i = 0; i < s.size()-1; ++i)
+        {
+            if(s[i] == '1' && s[i+1] == '1')
             {
-                closestsetbit = i;
-                break;
+                s[i] = '2';
+                flag = 1;
+                int ind = i+1;
+                while(s[ind] == '1' && ind < s.size()) {s[ind] = '0'; ind++;}
+                if(ind < s.size() && s[ind] == '0') s[ind] = '1';
+                else 
+                {
+                    s.push_back('1');
+                    break;
+                }
+                i = ind-1;
             }
         }
 
-        if(pow(2, closestsetbit) == x)
+        cout << s.size() << "\n";
+        for(char i : s)
         {
-            cout << closestsetbit << "\n";
-            for(int i = 0; i < closestsetbit; ++i) cout << 0 << " ";
-            cout << 1 << "\n";
-        } 
-
-        else
-        {
-            bool flag = 1;
-            vector<int> ans(32, 0)
-            
-            for(int i = closestsetbit; i < 32; ++i)
-            {
-                int temp = x;
-                temp -= 
-            }
-            
-            cout << 32 << "\n";
-            for(auto i : ans) cout << i << " ";
-            cout << "\n";
+            if(i == '2') cout << "-1";
+            else cout << i;
+            cout << " ";
         }
+
+        cout << "\n";
     }
 
     return 0;
