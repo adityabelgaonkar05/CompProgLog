@@ -47,7 +47,10 @@ using namespace std;
 
 int32_t main()
 {
-    cout << int(1e8);
+    map<int, int> mp;
+    mp[1]++;
+    mp[1]--;
+    cout << mp.size();
 
     return 0;
 }
