@@ -16,31 +16,31 @@ int32_t main()
         for(auto &i : a) cin >> i;
         for(auto &i : b) cin >> i;
 
-        int p = 0;
-        bool flag = 0;
+        bool bwn = 0;
+        int closest = 0;
+
         for(int i = 0; i < n; ++i)
         {
-            
-            if(abs(a[i] - b[n]) < abs(a[p] - b[n]))
-            {
-                p = i;
-            }
+            if(abs(a[i] - b[n]) < abs(a[closest] - b[n])) closest = i;
+            else if(abs(b[closest] - b[n]) > abs(b[i] - b[n])) closest = i;
+            if((a[i] <= b[n] && b[n] <= b[i]) || (a[i] >= b[n] && b[n] >= b[i])) {bwn = 1; break;}
+            ans += abs(a[i] - b[i]);
+        }
 
-            else if(abs(a[i] - b[n]) == abs(a[p] - b[n]))
+        if(bwn)
+        {
+            ans = 1;
+            for(int i = 0; i < n; ++i)
             {
-                if((b[i] < a[i] and b[n] >= b[i] and b[n] <= a[i]) or (b[i] > a[i] and b[n] <= b[i] and b[n] >= a[i]))
-                {
-                    p = i;
-                    flag 
-                }
+                ans += abs(a[i] - b[i]);
             }
         }
 
-        ans += abs(a[p] - b[n]) + 1;
-
-        for(int i = 0; i < n; ++i)
+        else 
         {
-            if(i != p) ans += abs(a[i] - b[i]);
+            a.push_back(a[closest]);
+            ans += abs(a[n] - b[n]);
+            if((a[closest] <= b[closest] && b[closest] <= b[n]) || (a[closest] >= b[closest] && b[closest] >= b[n])) ans -= abs(a[closest] - b[closest]);
         }
 
         cout << ans << "\n";
