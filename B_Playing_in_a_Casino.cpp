@@ -35,7 +35,10 @@ int32_t main()
                 total += ((b[j] * j) - curr);
                 curr += b[j];
             }
+            b.clear();
         }
+
+        a.clear();
 
         cout << total << "\n";
     }
