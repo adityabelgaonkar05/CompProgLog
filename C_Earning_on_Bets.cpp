@@ -13,7 +13,7 @@ int32_t main()
         for(auto &i : a) cin >> i;
 
         int sumofa = accumulate(a.begin(), a.end(), 0);
-        if(sumofa/n > n)
+        if(1/n > n)
         {
             int mult = 1;
             for(auto i : a) mult*=i;

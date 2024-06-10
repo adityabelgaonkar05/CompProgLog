@@ -1,1 +1,1 @@
-print(bin(57), bin(37))
+print(3%2)
