@@ -1,1 +1,2 @@
-print(590/2 + 275)
+from math import cbrt
+print(cbrt(6))
