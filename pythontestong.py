@@ -1,2 +1,1 @@
-from math import cbrt
-print(cbrt(6))
+print(-11 % 1000000007)
