@@ -3,9 +3,11 @@
 #define ab adityabelgaonkar
 using namespace std;
 
+const int MOD = 1000000007;
+
 int kadanes(vector<int> &a)
 {
-    int maxsofar = INT_MIN;
+    int maxsofar = 0;
     int currsum = 0;
 
     for(int i : a)
@@ -14,7 +16,7 @@ int kadanes(vector<int> &a)
         maxsofar = max(currsum, maxsofar);
     }
 
-    return maxsofar;
+    return maxsofar % MOD;
 }
 
 int32_t main()
@@ -24,12 +26,24 @@ int32_t main()
     int t; cin >> t;
     while(t--)
     {
-        int n, k; cin >> n >> k;
+        int n, k, ans = 0; cin >> n >> k;
         vector<int> a(n);
         for(int i = 0; i < n; ++i) cin >> a[i];
-        int ans = 0;
+        int kadaneval = kadanes(a);
 
-        cout << kadanes(a) << '\n';
+        int sum = 0;
+        for(int i : a) sum += i;
+        sum = (sum % MOD + MOD) % MOD;
+
+        int t = 1;
+        for(int i = 1; i < k; ++i)
+        {
+            t = 2 * t % MOD;
+        }
+
+        ans = (sum + kadaneval * t -kadaneval + MOD) % MOD;
+
+        cout << ans << '\n';
     }
 
     return 0;
