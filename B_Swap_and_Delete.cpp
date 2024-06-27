@@ -9,13 +9,25 @@ int32_t main()
     {
         string s; cin >> s;
         map<char, int> mp;
-        for(auto x : s) mp[x]++;
-        int count1 = 0, count0 = 0;
-        for(auto x : mp) x.first == '1' ? count1 = x.second : count0 = x.second;
-        if(count1 == count0) cout << 0 << endl;
-        else if(count1 == 0 || count0 == 0 && s.size() < 3) cout << s.size() << endl;
-        else if(s.size()%2) cout << s.size() - 1 << endl;
-        else cout << s.size() - 2 << endl;
+        for(auto i : s) mp[i]++;
+
+        string ans = "";
+        for(int i = 0; i < s.size(); ++i)
+        {
+            if(s[i] == '1' && mp['0']--) 
+            {
+                ans.push_back('0');
+            }
+
+            else if(s[i] == '0' && mp['1']--)
+            {
+                ans.push_back('1');
+            }
+
+            else break;
+        }
+
+        cout << s.size() - ans.size() << '\n';
     }
 
     return 0;

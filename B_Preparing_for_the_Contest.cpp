@@ -10,14 +10,18 @@ int32_t main()
     int t; cin >> t;
     while(t--)
     {
-        int n; cin >> n;
-        string s; cin >> s;
-        int ans = 0;
-        map<char, int> mp;
-        for(auto i : s) mp[i]++;
+        int n, k; cin >> n >> k;
+        for(int i = 1; i <= k; ++i)
+        {
+            cout << i << ' ';
+        }
 
-        for(auto i : mp) if(((int)i.first) - 64 <= i.second) ans++;
-        cout << ans << '\n';
+        for(int i = n; i > k; --i)
+        {
+            cout << i << ' ';
+        }
+
+        cout << '\n';
     }
 
     return 0;

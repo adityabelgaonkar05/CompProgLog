@@ -10,14 +10,16 @@ int32_t main()
     int t; cin >> t;
     while(t--)
     {
-        int n; cin >> n;
+        int n, m; cin >> n >> m;
         string s; cin >> s;
-        int ans = 0;
-        map<char, int> mp;
-        for(auto i : s) mp[i]++;
-
-        for(auto i : mp) if(((int)i.first) - 64 <= i.second) ans++;
-        cout << ans << '\n';
+        set<int> temp;
+        string cc; 
+        int el;
+        for(int i = 0; i < m; ++i)
+        {
+            cin >> el;
+            temp.insert(el);
+        }
     }
 
     return 0;
