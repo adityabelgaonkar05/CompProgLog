@@ -16,8 +16,7 @@ int32_t main()
         for(auto &i : a) cin >> i;
         for(auto &i : b) cin >> i;
 
-        map<int, int> maxa;
-        map<int, int> maxb;
+        vector<int> hasha(2 * n + 1, 0), hashb(2 * n + 1, 0);
         int currcount = 1;
 
         for(int i = 0; i < n - 1; ++i)
@@ -25,12 +24,12 @@ int32_t main()
             if(a[i] == a[i + 1]) currcount++;
             else currcount = 1; 
 
-            maxa[a[i]] = max(maxa[a[i]], currcount);
+            hasha[a[i]] = max(hasha[a[i]], currcount);
         }
 
         if(a[n-1] != a[n-2]) currcount = 1;
 
-        maxa[a[n-1]] = max(maxa[a[n-1]], currcount);
+        hasha[a[n-1]] = max(hasha[a[n-1]], currcount);
 
         currcount = 1;
 
@@ -39,19 +38,17 @@ int32_t main()
             if(b[i] == b[i + 1]) currcount++;
             else currcount = 1; 
 
-            maxb[b[i]] = max(maxb[b[i]], currcount);
+            hashb[b[i]] = max(hashb[b[i]], currcount);
         }
 
         if(b[n-1] != b[n-2]) currcount = 1;
 
-        maxb[b[n-1]] = max(maxb[b[n-1]], currcount);
+        hashb[b[n-1]] = max(hashb[b[n-1]], currcount);
 
         int ans = 0;
 
-        for(auto i : maxa)
-        {
-            ans = max(maxb[i.first] + i.second, ans);
-        }
+        for(int i : a) ans = max(ans, hasha[i] + hashb[i]);
+        for(int i : b) ans = max(ans, hashb[i] + hasha[i]);
 
         cout << ans << '\n';
     }

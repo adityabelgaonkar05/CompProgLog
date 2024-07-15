@@ -12,28 +12,67 @@ int32_t main()
     {
         int n; cin >> n;
         string s; cin >> s;
-        if(n > 3)
+
+        int ind = 0;
+        int minitwo = 99;
+        
+        for(int i = 0; i < n-1; ++i)
         {
-            if(find(s.begin(), s.end(), '0') != s.end()) cout << 0 << '\n';
-            else
+            string rp = "0";
+            rp.push_back(s[i]);
+            rp.push_back(s[i + 1]);
+            if(stoi(rp) < minitwo)
             {
-                int ans = 0;
-                for(char i : s) 
-                {
-                    if(i != '1') ans += (i - '0'); 
-                }
-                cout << max(ans, 1ll) << '\n';
+                minitwo = stoi(rp);
+                ind = i;
             }
         }
-
-        else if(n < 3)
+        
+        if(minitwo == 0)
         {
-            cout << stoi(s) << '\n';
+            cout << 0 << '\n';
+        }
+
+        else if(n == 2)
+        {
+            cout << minitwo << '\n';
+        }
+
+        else if(n == 3)
+        {
+            if(s[0] == '0' or s[2] == '0') cout << 0 << '\n';
+            else
+            {
+                s.erase(ind, 1);
+                s.erase(ind, 1);
+
+                string rp = "0";
+                rp.push_back(s[0]);
+                
+                cout << min(minitwo + stoi(rp), minitwo * stoi(rp)) << '\n';
+            }
         }
 
         else
         {
+            if(find(s.begin(), s.end(), '0') != s.end()) cout << 0 << '\n';
+            else
+            {
+                s.erase(ind, 1);
+                s.erase(ind, 1);
 
+                for(char i : s)
+                {
+                    if(i != '1')
+                    {
+                        string rp = "0";
+                        rp.push_back(i);
+                        minitwo = min(minitwo + stoi(rp), minitwo * stoi(rp));
+                    }
+                }
+
+                cout << minitwo << '\n';
+            }
         }
     }
 
