@@ -1,9 +1,21 @@
-#d49b02b5-ccf0-4ec8-9499-6887e6b4a73f 
+def closest_sum(a, f_a, b, f_b, T):
+    closest_value = 0
 
-import uuid
+    # Iterate over all possible combinations of multiples of a and b
+    for i in range(f_a + 1):
+        for j in range(f_b + 1):
+            sum_value = i * a + j * b
+            if sum_value <= T and sum_value > closest_value:
+                closest_value = sum_value
+    
+    return closest_value
 
-# Generate a new UUID
-new_uuid = uuid.uuid4()
+# Example usage:
+a = 3
+f_a = 4
+b = 5
+f_b = 3
+T = 21
 
-# Print the UUID
-print(new_uuid)
+result = closest_sum(a, f_a, b, f_b, T)
+print(f"The closest value to {T} is: {result}")
