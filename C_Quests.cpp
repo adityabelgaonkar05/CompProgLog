@@ -12,31 +12,34 @@ int32_t main()
     {
         int n, k; cin >> n >> k;
         vector<int> a(n), b(n);
+        vector<int> c;
+        int maxel = b[0];
+
         for(auto &i : a) cin >> i;
+        for(int i = 1; i < n; ++i) a[i] += a[i - 1];
         for(auto &i : b) cin >> i;
-        int ans = a[0];
-        int maxb = b[0];
-        int next = 1;
-
-        while(--k)
+        for(int i = 0; i < n; ++i)
         {
-            if(next == n)
+            maxel = max(maxel, b[i]);
+            c.push_back(maxel);
+        }
+
+        int right = min(k - 1, n - 1);
+        int ans = INT_MIN;
+        while(right >= 0)
+        {
+            int temp = a[right];
+            if(k > right - 1)
             {
-                ans += maxb;
-            }
-            
-            else if(maxb <= a[next])
-            {
-                maxb = max(maxb, b[next]);
-                ans += a[next];
-                next++;
+                temp += ((k - right - 1) * c[right]);
             }
 
-            else 
-            {
-                ans += maxb;
-            }
+            ans = max(ans, temp);
+            right--;
         }
+
+        // for(int i : a) cout << i << ' '; cout << '\n';
+        // for(int i : c) cout << i << ' '; cout << '\n';
 
         cout << ans << '\n';
     }
