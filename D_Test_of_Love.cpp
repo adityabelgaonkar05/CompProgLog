@@ -1,19 +1,21 @@
 #include <bits/stdc++.h>
 #define int long long
+#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
 
-pair<int, int> findlogorwat(string &s, int i, int m)
+long long find_first_l_or_w(int l, int m, string &s)
 {
-    pair<int, int> locwat = {-1, -1};
-    int cond = s.size();
-    for(int j = i + 1; j < min(1 + m + i, cond); ++j)
+    int latestw = -1;
+
+    for(int i = l; (i < (l + m)) && (i < s.size()); ++i)
     {
-        if(s[j] == 'L') return {j, 1};
-        else if(s[j] == 'W') locwat = {j, 0};
+        // cout << s[i];
+        if(s[i] == 'L') {return i; break;}
+        else if(s[i] == 'W') {latestw = i;}
     }
 
-    return locwat;
+    return latestw;
 }
 
 int32_t main()
@@ -24,37 +26,38 @@ int32_t main()
     while(t--)
     {
         int n, m, k; cin >> n >> m >> k;
-        string s; cin >> s;
-        bool caught = 0;
-        int i = -1;
+        bool ans = 0;
+        string st; cin >> st;
+        string s = "L" + st;
+        ++n;
+        int i = 0;
+
         while(i < n)
         {
-            if(n - i <= m) break;
-            if(i == -1 or s[i] != 'W')
-            {    
-                pair<int, int> res = findlogorwat(s, i, m);
-                if(res.first == -1) {caught = 1; break;}
-                else if(res.second == 1) i = res.first;
-                else 
-                {
-                    if(k == 0) {caught = 1; break;}
-                    i = res.first;
-                    k--;
-                }
+            if(s[i] == 'L')
+            {
+                if(i + m >= n) {ans = 1; break;}
+                int pos = find_first_l_or_w(i + 1, m, s);
+                if(pos == -1) break;
+                else i = pos;
+            }
+
+            else if(s[i] == 'W')
+            {
+                if(k <= 0) break;
+                if(i == n - 1) {ans = 1; break;}
+                else k--;
+                ++i;
             }
 
             else
             {
-                if(i == n - 1) break;
-                else if(s[i + 1] == 'C') {caught = 1; break;}
-                else if(s[i + 1] == 'W' && k == 0) {caught = 1; break;}
-                else if(s[i + 1] == 'W') k--;
-                i++;
+                break;
             }
         }
 
-        if(caught) cout << "NO\n";
-        else cout << "YES\n";
+        if(ans) cout << "YES\n";
+        else cout << "NO\n";
     }
 
     return 0;
