@@ -1,9 +1,41 @@
 #include <bits/stdc++.h>
 #define int long long
+#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
 
+int maximumpass(int f1, int f2, int val1, int val2, int k)
+{
+    int ans = val2 * f2 + val1 * f1;
+    if(ans <= k) return ans;
+    else
+    {
+        int curr = min(val1 * f1, (k/val1) * val1);
+        if(curr == k) return curr;
+        
+        int count1 = min(f1, (k/val1));
+        int count2 = 0;
 
+        while(curr <= k && count2 < f2)
+        {
+            if(curr == k) return curr;
+            if(curr + val2 <= k)
+            {
+                curr += val2;
+                count2++;
+            }
+            else if(count1)
+            {
+                curr++;
+                count2++;
+                count1--;
+            }
+            else break;
+        }
+
+        return curr;
+    }
+}
 
 int32_t main()
 {
@@ -12,30 +44,21 @@ int32_t main()
     int t; cin >> t;
     while(t--)
     {
-        int n, m; cin >> n >> m; 
-        set<int> a;
+        int n, k; cin >> n >> k;
+        vector<int> a(n);
+        set<int> b;
         map<int, int> mp;
-        int el;
-        int maxel = 0;
-        for(int i = 0; i < n; ++i) {cin >> el; a.insert(el); mp[el]++;}
-        for(auto i : a)
+        for(int i = 0; i < n; ++i) {cin >> a[i]; mp[a[i]]++; b.insert(a[i]);}
+        int ans = 0;
+
+        for(int i : b)
         {
-            int add = mp[i] * i + (i + 1) * mp[i + 1];
-            // 3 * 206 + 207 * 4 = 1446
-            
-            if(add <= m) maxel = max(maxel, add);
-            else
-            {
-                int al = mp[i];
-                int ej = mp[i + 1];
-
-                
-
-                maxel = max(d, maxel);
-            }
+            int f2 = mp[i + 1];
+            int res = maximumpass(mp[i], f2, i, i + 1, k);
+            ans = max(ans, res);
         }
 
-        cout << maxel << '\n';
+        cout << ans << '\n';
     }
 
     return 0;

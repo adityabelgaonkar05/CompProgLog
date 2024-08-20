@@ -1,52 +1,63 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define int long long
+#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
 
 int32_t main()
 {
-    int t; cin >> t; 
+    ios_base::sync_with_stdio(false); cin.tie(NULL);
+    
+    int t; cin >> t;
     while(t--)
     {
         int n, k; cin >> n >> k;
         vector<int> a(n);
-        for(auto & i : a) cin >> i;
-        // vector<int> b(a.begin(), a.end());
+        for(auto &i : a) cin >> i;
+        int damagel = k/2 + (k & 1);
+        int damager = k/2;
 
-        a[0] -= (k/2 + k%2);
+        vector<int> b = a;
+
         for(int i = 1; i < n; ++i)
         {
-            a[i] += a[i-1];
+            a[i] += a[i - 1];
         }
 
-        for(auto i : a) cout << i << " ";
-        cout << endl;
-        a[n-1] -= k/2;
-        for(int i = n-2; i >= 0; --i)
+        for(int i = n - 2; i >= 0; --i)
         {
-            a[i] += a[i+1];
+            b[i] += b[i + 1];
         }
 
-        for(auto i : a) cout << i << " ";
-        cout << endl;
+        // for(int i : a) cout << i << ' '; cout << '\n';
+        // for(int i : b) cout << i << ' '; cout << '\n';
 
-        int r = 0;
-        for(int i = n-1; i >= 0; --i)
-        {
-            if(a[i] <= 0) r++;
-            else break;
-        }
-
-        int l = 0;
+        int leftp = n-1;
         for(int i = 0; i < n; ++i)
         {
-            if(a[i] <= 0) l++;
-            else break;
+            if(a[i] > damagel) {leftp = i; break;}
+            else if(a[i] == damagel && i != n-1) {leftp = i + 1; break;}
         }
 
-        if(l + r >= n) cout << n << "\n";
-        else cout << l + r << "\n";
-        cout << l << " " << r << endl;
+        int rightp = 0;
+        for(int i = n - 1; i >= 0; --i)
+        {
+            if(b[i] > damager) {rightp = i; break;}
+            else if(b[i] == damager && i != 0) {rightp = i - 1; break;}
+        }
+        
+        // cout << rightp << ' ' << leftp << '\n';
+
+        if(leftp > rightp) cout << n << '\n';
+        else if(leftp < rightp) cout << n - (rightp - leftp + 1) << '\n';
+        else
+        {
+            
+            if(a[n - 1] > k) cout << n - 1 << '\n';
+            else cout << n << '\n';
+        }
+
+        // cout << '\n';
     }
 
     return 0;

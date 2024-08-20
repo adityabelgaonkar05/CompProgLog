@@ -14,35 +14,20 @@ int32_t main()
         vector<int> a(n);
         for(auto &i : a) cin >> i;
 
-        int curr;
-        if(n == 1) curr = a[0];
-        else if(a[0] < a[1])
-        {
-            curr = a[0] + x;
-        }
-
-        else 
-        {
-            curr = a[0] - x;
-        }
-        
+        int smallest = a[0];
+        int largest = a[0];
         int ans = 0;
-
         for(int i = 0; i < n; ++i)
         {
-            if(abs(curr - a[i]) > x)
+            smallest = min(a[i], smallest);
+            largest = max(a[i], largest);
+            if(largest - smallest > 2 * x)
             {
                 ans++;
-                if(i < n-1) 
-                {
-                    if(a[i] < a[i + 1]) curr = a[1] - x;
-                    else curr = a[i + 1] + x;
-                }
+                largest = a[i];
+                smallest = a[i];
             }
-
-            // cout << curr << ' ';
         }
-        // cout << '\n';
 
         cout << ans << '\n';
     }

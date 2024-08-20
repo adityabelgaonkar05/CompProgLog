@@ -1,7 +1,34 @@
 #include <bits/stdc++.h>
 #define int long long
+#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
+
+vector<int> maxindices(vector<int> a)
+{
+    vector<int> maxind;
+
+    for(int j = 0; j < 3; ++j)
+    {
+        int maxel = -1;
+        int toappend = 0;
+        for(int i = 0; i < a.size(); ++i)
+        {
+            if(find(maxind.begin(), maxind.end(), i) == maxind.end())
+            {
+                if(maxel < a[i])
+                {
+                    maxel = a[i];
+                    toappend = i;
+                }
+            }
+        }
+
+        maxind.push_back(toappend);
+    }
+
+    return maxind;
+}
 
 int32_t main()
 {
@@ -11,88 +38,31 @@ int32_t main()
     while(t--)
     {
         int n; cin >> n;
-        vector<int> a(n), b(n), c(n), d;
-        for(auto &i : a) {cin >> i; d.push_back(i);}
-        for(auto &i : b) {cin >> i; d.push_back(i);}
-        for(auto &i : c) {cin >> i; d.push_back(i);}
+        vector<int> a(n), b(n), c(n);
+        for(auto &i : a) cin >> i;
+        for(auto &i : b) cin >> i;
+        for(auto &i : c) cin >> i;
 
-        int firstmax, secondmax, thirdmax, ans = 0;
-        firstmax = max_element(d.begin(), d.end()) - d.begin();
+        int ans = 0;
 
-        if(firstmax < n)
+        vector<int> a1 = maxindices(a);
+        vector<int> b1 = maxindices(b);
+        vector<int> c1 = maxindices(c);
+
+        for(int i : a1)
         {
-            b[firstmax] = -1;
-            c[firstmax] = -1;
-
-            vector<int> newarr(b.begin(), b.end());
-            for(int i : c) newarr.push_back(i);
-
-            secondmax = max_element(newarr.begin(), newarr.end()) - newarr.begin();
-
-            if(secondmax < n) 
+            for(int j : b1)
             {
-                c[secondmax] = -1;
-                thirdmax = max_element(c.begin(), c.end()) - c.begin();
-                ans = a[firstmax] + b[secondmax] + c[thirdmax];
-            }
-
-            else
-            {
-                b[secondmax % n] = -1;
-                thirdmax = max_element(b.begin(), b.end()) - b.begin();
-                ans = a[firstmax] + b[thirdmax] + c[secondmax % n];
+                for(int k : c1)
+                {
+                    if(i != j && i != k && j != k)
+                    {
+                        ans = max(ans, a[i] + b[j] + c[k]);
+                    }
+                }
             }
         }
 
-        else if(firstmax < 2 * n)
-        {
-            a[firstmax % n] = -1;
-            c[firstmax % n] = -1;
-
-            vector<int> newarr(a.begin(), a.end());
-            for(auto i : c) newarr.push_back(i);
-
-            secondmax = max_element(newarr.begin(), newarr.end()) - newarr.begin();
-            if(secondmax < n)
-            {
-                c[secondmax] = -1;
-                thirdmax = max_element(c.begin(), c.end()) - c.begin();
-                cout << c[thirdmax] << ' ';
-                ans = a[secondmax] + b[firstmax % n] + c[thirdmax];
-            }
-
-            else 
-            {
-                a[secondmax % n] = -1;
-                thirdmax = max_element(a.begin(), a.end()) - a.begin();
-                ans = a[thirdmax] + b[firstmax % n] + c[secondmax % n];
-            }
-        }
-        
-        else 
-        {
-            a[firstmax % n] = -1;
-            b[firstmax % n] = -1;
-
-            vector<int> newarr(a.begin(), a.end());
-            for(int i : b) newarr.push_back(i);
-
-            secondmax = max_element(newarr.begin(), newarr.end()) - newarr.begin();
-            if(secondmax < n)
-            {
-                b[secondmax] = -1;
-                thirdmax = max_element(b.begin(), b.end()) - b.begin();
-                ans = a[secondmax] + b[thirdmax] + c[firstmax % n];
-            }
-
-            else
-            {
-                a[secondmax % n] = -1;
-                thirdmax = max_element(a.begin(), a.end()) - a.begin();
-                ans = a[thirdmax] + b[secondmax % n] + c[firstmax % n];
-            }
-        }
-        
         cout << ans << '\n';
     }
 
