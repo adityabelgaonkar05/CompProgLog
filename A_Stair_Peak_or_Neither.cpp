@@ -1,18 +1,27 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #define int long long
+#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
 
 int32_t main()
 {
-    int t; cin >> t;
-    while(t--)
-    {
-        int a, b, c; cin >> a >> b >> c;
-        if(a < b && b < c) cout << "STAIR" << endl;
-        else if(a < b && b > c) cout << "PEAK" << endl;
-        else cout << "NONE" << endl;
-    }
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
 
-    return 0;
+  int t;
+  cin >> t;
+  while (t--)
+  {
+    int a, b, c;
+    cin >> a >> b >> c;
+    if (a < b && b < c)
+      cout << "STAIR\n";
+    else if (b > a && b > c)
+      cout << "PEAK\n";
+    else
+      cout << "NONE\n";
+  }
+
+  return 0;
 }

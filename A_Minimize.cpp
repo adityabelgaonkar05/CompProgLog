@@ -13,10 +13,17 @@ int32_t main()
   cin >> t;
   while (t--)
   {
-    int x, y, n;
-    cin >> x >> y >> n;
-    int ans = n / x * x + y;
+    int a, b;
+    cin >> a >> b;
+    int ans = INT_MAX;
+
+    for (int i = a; i <= b; ++i)
+    {
+      ans = min(ans, (i - a) + (b - i));
     }
+
+    cout << ans << '\n';
+  }
 
   return 0;
 }

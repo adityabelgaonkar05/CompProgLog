@@ -6,48 +6,54 @@ using namespace std;
 
 int32_t main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
-    
-    int t; cin >> t;
-    while(t--)
+  ios_base::sync_with_stdio(false);
+  cin.tie(NULL);
+
+  int t;
+  cin >> t;
+  while (t--)
+  {
+    int n, ans = 0;
+    cin >> n;
+    vector<int> a(n);
+    for (auto &i : a)
+      cin >> i;
+
+    int maxodd = -1;
+
+    vector<int> even;
+    for (int i : a)
+      if (!(i & 1))
+        even.push_back(i);
+
+      else
+        maxodd = max(i, maxodd);
+
+    sort(even.begin(), even.end());
+
+    if (maxodd == -1 || even.size() == 0)
+      cout << 0 << '\n';
+
+    else
     {
-        //sort, split into odd even, two pointer
-
-        int n; cin >> n;
-        vector<int> a(n);
-        for(auto &i : a) cin >> i;
-        sort(a.begin(), a.end());
-
-        vector<int> even;
-        int maxodd = INT_MIN;
-
-        for(int i : a) 
+      for (int i = 0; i < even.size(); ++i)
+      {
+        ans++;
+        if (even[i] < maxodd)
         {
-            if((i & 1) == 0) even.push_back(i);
-            else maxodd = max(maxodd, i);
+          maxodd += even[i];
         }
 
-        int ans = 0;
-        int i = 0;
-        while(i < even.size() && (maxodd != INT_MIN))
+        else
         {
-            if(maxodd > even[i])
-            {
-                maxodd += even[i];
-                ++ans;
-                ++i;
-            }
-
-            else
-            {
-                ans += 2;
-                maxodd += (even.back() * 2);
-                even.pop_back();
-            }
+          ans += (even.size() - i);
+          break;
         }
+      }
 
-        cout << ans << '\n';
+      cout << ans << '\n';
     }
+  }
 
-    return 0;
+  return 0;
 }

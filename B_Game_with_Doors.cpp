@@ -13,26 +13,26 @@ int32_t main()
   cin >> t;
   while (t--)
   {
-    int n, k;
-    cin >> n >> k;
-    vector<string> a;
+    int l, r, L, R;
+    cin >> l >> r >> L >> R;
+    int overlap = min(r, R) - max(l, L);
+    if (overlap <= -1)
+      overlap = 1;
 
-    for (int i = 0; i < n; ++i)
+    else
     {
-      string s;
-      cin >> s;
-      a.push_back(s);
-    }
-
-    for (int i = 0; i < n; i += k)
-    {
-      for (int j = 0; j < n; j += k)
+      if (l != L)
       {
-        cout << a[i][j];
+        overlap++;
       }
 
-      cout << '\n';
+      if (r != R)
+      {
+        overlap++;
+      }
     }
+
+    cout << overlap << '\n';
   }
 
   return 0;

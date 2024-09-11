@@ -13,10 +13,9 @@ int32_t main()
   cin >> t;
   while (t--)
   {
-    int n, k;
-    cin >> n >> k;
+    int n;
+    cin >> n;
     vector<string> a;
-
     for (int i = 0; i < n; ++i)
     {
       string s;
@@ -24,15 +23,16 @@ int32_t main()
       a.push_back(s);
     }
 
-    for (int i = 0; i < n; i += k)
+    for (int j = n - 1; j >= 0; --j)
     {
-      for (int j = 0; j < n; j += k)
+      for (int i = 0; i < 4; ++i)
       {
-        cout << a[i][j];
+        if (a[j][i] == '#')
+          cout << i + 1 << ' ';
       }
-
-      cout << '\n';
     }
+
+    cout << '\n';
   }
 
   return 0;
