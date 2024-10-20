@@ -5,16 +5,20 @@ using namespace std;
 
 int32_t main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
-    
-    // int t; cin >> t;
-    // while(t--)
-    // {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    // }
+    int n = 1000000007;
 
-    vector<int> a = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-    cout << a.end() - a.begin() << '\n';
+    for (int i = 2; i * i <= n; ++i)
+    {
+        if (n % i == 0)
+        {
+            cout << "no ";
+            cout << i << ' ';
+            break;
+        }
+    }
 
     return 0;
 }
