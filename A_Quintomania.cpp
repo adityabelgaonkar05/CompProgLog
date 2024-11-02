@@ -17,30 +17,22 @@ int32_t main()
         cin >> n;
         vector<int> a(n);
         for (auto &i : a)
-        {
             cin >> i;
-        }
 
-        if (n > 1)
+        bool cond = 0;
+        for (int i = 0; i < n - 1; ++i)
         {
-            int ans = INT_MAX;
-            ans += 1082;
-
-            for (int i = 0; i < n / 2; ++i)
+            if (abs(a[i] - a[i + 1]) != 5 && abs(a[i] - a[i + 1]) != 7)
             {
-                if ((a[i] % ans) != (a[n - 1 - i] % ans))
-                {
-                    ans = min(ans, abs(a[i] - a[n - 1 - i]));
-                }
+                cond = 1;
+                break;
             }
-
-            if (ans == 2147484729)
-                ans = 0;
-            cout << ans << '\n';
         }
 
+        if (cond)
+            cout << "NO\n";
         else
-            cout << 0 << '\n';
+            cout << "YES\n";
     }
 
     return 0;
