@@ -40,7 +40,7 @@ int32_t main()
   string s;
   cin >> s;
   bool cond = 0;
-  int n = s.size() / 2 + 1;
+  int n = s.size() / 2 + (s.size() & 1);
   for (int i = n; i < s.size(); ++i)
   {
     string s1 = s.substr(0, i);
