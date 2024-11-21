@@ -7,7 +7,10 @@ int32_t main()
 {
     int n;
     cin >> n;
-    cout << n / 5 << '\n';
+    if (n > 4)
+        cout << (n + 1) / 5 << '\n';
+    else
+        cout << 0 << '\n';
 
     return 0;
 }

@@ -13,64 +13,54 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n, m, L;
-        cin >> n >> m >> L;
+        int n, m, l;
+        cin >> n >> m >> l;
+
         vector<pair<int, int>> hur(n);
+        vector<pair<int, int>> pu(m);
+
         for (auto &i : hur)
             cin >> i.first >> i.second;
-        vector<pair<int, int>> pp(m);
-        for (auto &i : pp)
+        for (auto &i : pu)
             cin >> i.first >> i.second;
 
-        // sort(hur.begin(), hur.end());
-        // sort(pp.begin(), pp.end());
+        priority_queue<int> unus;
 
-        int currjump = 1;
-        int ans = 0;
         int temp = 0;
-        priority_queue<pair<int, int>> unusu;
+        bool poss = 1;
+        int ans = 0;
+        int currjump = 1;
 
-        bool isposs = 1;
-
-        for (int i = 0; i < n && isposs; ++i)
+        for (auto i : hur)
         {
-            while ((temp < m) && (pp[temp].first < hur[i].first))
+            if (poss == 0)
+                break;
+            while ((temp < m) && (pu[temp].first < i.first))
             {
-                unusu.push(pp[temp]);
+                unus.push(pu[temp].second);
                 temp++;
             }
 
-            // for (auto i : unusu)
-            //     i.first << ' ' << i.second << '\n';
-
-            if (currjump <= hur[i].second - hur[i].first + 1)
+            if (currjump < (i.second - i.first + 2))
             {
-                while ((currjump <= hur[i].second - hur[i].first + 1) && unusu.size())
+                while ((currjump < (i.second - i.first + 2)) && unus.size())
                 {
-                    auto el = unusu.top();
-                    currjump += el.second;
+                    currjump += unus.top();
                     ans++;
-                    unusu.pop();
+                    unus.pop();
                 }
 
-                if (currjump <= hur[i].second - hur[i].first + 1)
+                if (currjump < (i.second - i.first + 2))
                 {
-                    isposs = 0;
+                    poss = 0;
                     break;
                 }
             }
-
-            if (!isposs)
-                break;
         }
-
-        // cout << currjump << ' ';
-
-        if (!isposs)
-            cout
-                << -1 << '\n';
-        else
+        if (poss)
             cout << ans << '\n';
+        else
+            cout << -1 << '\n';
     }
 
     return 0;

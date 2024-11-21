@@ -15,42 +15,54 @@ int32_t main()
   {
     int n;
     cin >> n;
-    map<pair<int, int>, int> mp;
     vector<pair<int, int>> a;
+    int countlowerpoints = 0, countupperpoints = 0;
+    map<pair<int, int>, int> mp;
+
     for (int i = 0; i < n; ++i)
     {
       pair<int, int> temp;
       cin >> temp.first >> temp.second;
       a.push_back(temp);
       mp[temp]++;
+      if (temp.second == 0)
+        countlowerpoints++;
+      else
+        countupperpoints++;
     }
 
     sort(a.begin(), a.end());
 
-    int count = 0;
-    int count2 = 0;
+    int ans = 0;
 
     for (int i = 0; i < n - 1; ++i)
     {
       if (a[i].first == a[i + 1].first)
       {
-        count++;
+        ans += (countlowerpoints - 1) + (countupperpoints - 1);
       }
     }
 
-    for (auto i : a)
+    for (int i = 0; i < n - 2; ++i)
     {
-      pair<int, int> tem = {i.first + 1, 1};
-      pair<int, int> tem2 = {i.first + 2, 0};
-      pair<int, int> tem3 = {i.first + 1, 0}, tem4 = {i.first + 2, 1};
+      if (a[i].second == 0)
+      {
+        pair<int, int> temp = {a[i].first + 1, 1};
+        pair<int, int> temp2 = {a[i].first + 2, 0};
+        if (mp[temp] && mp[temp2])
+          ans++;
+      }
 
-      if ((i.second == 0) && (mp[tem] && mp[tem2]))
-        count2++;
-      else if ((i.second == 1) && mp[tem3] && mp[tem4])
-        count2++;
+      else
+      {
+        pair<int, int> temp = {a[i].first + 1, 0};
+        pair<int, int> temp2 = {a[i].first + 2, 1};
+        if (mp[temp] && mp[temp2])
+          ans++;
+      }
     }
 
-    cout << count * (n - 2) + count2 << '\n';
+    cout << ans << '\n';
   }
 
   return 0;
