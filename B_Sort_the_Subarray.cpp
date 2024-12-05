@@ -16,60 +16,36 @@ int32_t main()
         int n;
         cin >> n;
         vector<int> a(n), b(n);
+
         for (auto &i : a)
             cin >> i;
         for (auto &i : b)
             cin >> i;
 
-        int ans = 0;
-        int curr = 0;
-        int l = n;
-        int r = 0;
+        int l = 0;
+        int r = n - 1;
 
-        vector<pair<int, int>> allpos;
-
-        int start = 0;
-        for (int i = 0; i < n; ++i)
+        while (l < n)
         {
-            if (a[i] != b[i])
-            {
-                start = i;
+            if (a[l] != b[l])
                 break;
-            }
+            l++;
         }
 
-        for (int i = start; i < n - 1; ++i)
+        while (r >= 0)
         {
-            if (b[i] <= b[i + 1])
-            {
-                l = min(l, i);
-                curr++;
-                ans = max(curr, ans);
-            }
-
-            else
-            {
-                curr = 0;
-                allpos.push_back({l, i});
-                l = n;
-            }
+            if (a[r] != b[r])
+                break;
+            r--;
         }
 
-        if (l != n)
-        {
-            allpos.push_back({l, n - 1});
-        }
+        while (l > 0 && (b[l] >= b[l - 1]))
+            l--;
 
-        pair<int, int> maxpair = allpos[0];
-        for (auto i : allpos)
-        {
-            if (i.second - i.first > maxpair.second - maxpair.first)
-            {
-                maxpair = i;
-            }
-        }
+        while (r < n - 1 && (b[r] <= b[r + 1]))
+            r++;
 
-        cout << maxpair.first + 1 << ' ' << maxpair.second + 1 << '\n';
+        cout << l + 1 << ' ' << r + 1 << '\n';
     }
 
     return 0;

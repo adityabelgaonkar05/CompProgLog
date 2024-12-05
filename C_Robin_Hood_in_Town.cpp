@@ -16,28 +16,44 @@ int32_t main()
     int n;
     cin >> n;
     vector<int> a(n);
-
     for (auto &i : a)
       cin >> i;
 
-    if (n < 3)
+    if (n <= 2)
     {
-      cout << "-1\n";
+      cout << -1 << '\n';
       continue;
-    }
+    } // remember to use 1e18 not 1e9 in questions what is actually wrong with you
 
     sort(a.begin(), a.end());
-    int uptill = n / 2;
 
-    int sum = accumulate(a.begin(), a.end(), 0ll);
-    int ans = (long long)ceil((double)a[uptill] - (((double)sum) / (double)n)) * 2 * n;
-    if (((double)sum / (double)n) == (double)a[uptill])
-      ans = (sum + 1);
+    int sumfullarr = accumulate(a.begin(), a.end(), 0ll);
 
-    else if (ans < 0)
-      ans = 0;
+    int l = 0, r = (int)1e18 + 10; // i am actually fucking stupid
+    int ans = r;
 
-    cout << ans << ' ' << a[uptill] << '\n';
+    while (l < r)
+    {
+      int mid = l + (r - l) / 2;
+      if (((mid + sumfullarr) / n) > (2 * a[n / 2]))
+      {
+        ans = min(ans, mid);
+        r = mid;
+      }
+
+      else if ((((mid + sumfullarr) / n) == (2 * a[n / 2])) && ((mid + sumfullarr) % n))
+      {
+        ans = min(ans, mid);
+        r = mid;
+      }
+
+      else
+        l = mid + 1;
+    }
+
+    cout << ans << '\n';
+
+    // ans = maxel
   }
 
   return 0;
