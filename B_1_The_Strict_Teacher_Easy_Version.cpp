@@ -15,24 +15,37 @@ int32_t main()
   {
     int n, m, q;
     cin >> n >> m >> q;
-    vector<int> pos(m);
-    cin >> pos[0] >> pos[1];
-    vector<int> que(q);
-    cin >> que[0];
-    int fartherteacher;
+    vector<int> posteachers(m);
+    vector<int> queries(q);
 
-    if (abs(que[0] - pos[0]) > abs(que[0] - pos[1]))
+    for (auto &i : posteachers)
+      cin >> i;
+    for (auto &i : queries)
+      cin >> i;
+
+    sort(posteachers.begin(), posteachers.end());
+
+    for (auto x : queries)
     {
-      fartherteacher = pos[0];
+      if (x < posteachers[0])
+      {
+        cout << posteachers[0] - 1 << '\n';
+      }
+
+      else if (x > posteachers[m - 1])
+      {
+        cout << n - posteachers[m - 1] << '\n';
+      }
+
+      else if (x == posteachers[0])
+        cout << 0 << '\n';
+
+      else
+      {
+        int ind = upper_bound(posteachers.begin(), posteachers.end(), x) - posteachers.begin();
+        cout << (posteachers[ind] - posteachers[ind - 1]) / 2 << '\n';
+      }
     }
-
-    else
-      fartherteacher = pos[1];
-
-    // cout << fartherteacher << '\n';
-
-    cout << abs(fartherteacher - que[0]) / 2 << '\n';
-    //  << '\n';
   }
 
   return 0;

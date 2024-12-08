@@ -9,20 +9,37 @@ int32_t main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    int n;
-    cin >> n;
-    vector<int> a(n);
-    for (auto &i : a)
-        cin >> i;
-    int ans = 0;
-
-    for (int i = 0; i < n - 1; ++i)
+    int t;
+    cin >> t;
+    while (t--)
     {
-        if (a[i] > a[i + 1])
-            ans++;
-    }
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        vector<int> places(n + 1);
+        set<pair<int, int>> s;
+        for (int i = 0; i < n; ++i)
+        {
+            cin >> a[i];
+            s.insert({a[i], i});
+            places[a[i]] = i;
+        }
 
-    cout << ans << '\n';
+        for (auto i : s)
+        {
+            // for (int j = i.second; j < n; ++j)
+            // {
+            //     if (i.first <= a[j])
+            //     {
+            //         s.erase({a[j], places[a[j]]});
+            //     }
+
+            //     else break;
+            // }
+
+            // s.erase(i);
+        }
+    }
 
     return 0;
 }
