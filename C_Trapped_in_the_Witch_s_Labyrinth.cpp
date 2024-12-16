@@ -4,6 +4,26 @@
 #define ab adityabelgaonkar
 using namespace std;
 
+void recursivetraversal(vector<vector<int>> &bad, vector<string> &a, int &n, int &m, int curi, int curj)
+{
+    if (bad[curi][curj])
+        return;
+    bad[curi][curj] = 1;
+    if (curi > 0 && (a[curi - 1][curj] == 'D'))
+        recursivetraversal(bad, a, n, m, curi - 1, curj);
+
+    if (curi < n - 1 && (a[curi + 1][curj] == 'U'))
+        recursivetraversal(bad, a, n, m, curi + 1, curj);
+
+    if (curj > 0 && (a[curi][curj - 1] == 'R'))
+        recursivetraversal(bad, a, n, m, curi, curj - 1);
+
+    if (curj < m - 1 && (a[curi][curj + 1] == 'L'))
+        recursivetraversal(bad, a, n, m, curi, curj + 1);
+
+    return;
+}
+
 int32_t main()
 {
     ios_base::sync_with_stdio(false);
@@ -18,261 +38,115 @@ int32_t main()
         vector<string> a(n);
         for (auto &i : a)
             cin >> i;
+        vector<vector<int>> bad(n, vector<int>(m, 0));
 
-        set<pair<int, int>> free;
-        set<pair<int, int>> trapped;
+        for (int i = 0; i < m; ++i)
+        {
+            if (i == 0)
+            {
+                if (a[0][i] == 'D' || a[0][i] == 'R' || a[0][i] == '?')
+                    continue;
+            }
+
+            else if (i == m - 1)
+            {
+                if (a[0][i] == 'D' || a[0][i] == 'L' || a[0][i] == '?')
+                    continue;
+            }
+
+            else if (a[0][i] != 'U')
+                continue;
+
+            recursivetraversal(bad, a, n, m, 0, i);
+        }
+
+        for (int i = 0; i < m; ++i)
+        {
+            if (i == 0)
+            {
+                if (a[n - 1][i] == 'U' || a[n - 1][i] == 'R' || a[n - 1][i] == '?')
+                    continue;
+            }
+
+            else if (i == m - 1)
+            {
+                if (a[n - 1][i] == 'U' || a[n - 1][i] == 'L' || a[n - 1][i] == '?')
+                    continue;
+            }
+
+            else if (a[n - 1][i] != 'D')
+                continue;
+
+            recursivetraversal(bad, a, n, m, n - 1, i);
+        }
+
+        for (int i = 0; i < n; ++i)
+        {
+            if (i == 0)
+            {
+                if (a[i][0] == 'D' || a[i][0] == 'R' || a[i][0] == '?')
+                    continue;
+            }
+
+            else if (i == n - 1)
+            {
+                if (a[i][0] == 'U' || a[i][0] == 'R' || a[i][0] == '?')
+                    continue;
+            }
+            if (a[i][0] != 'L')
+                continue;
+
+            recursivetraversal(bad, a, n, m, i, 0);
+        }
+
+        for (int i = 0; i < n; ++i)
+        {
+            if (i == 0)
+            {
+                if (a[i][m - 1] == 'U' || a[i][m - 1] == 'L' || a[i][m - 1] == '?')
+                    continue;
+            }
+
+            else if (i == n - 1)
+            {
+                if (a[i][m - 1] == 'D' || a[i][m - 1] == 'L' || a[i][m - 1] == '?')
+                    continue;
+            }
+
+            if (a[i][m - 1] != 'R')
+                continue;
+
+            recursivetraversal(bad, a, n, m, i, m - 1);
+        }
 
         for (int i = 0; i < n; ++i)
         {
             for (int j = 0; j < m; ++j)
             {
-                if (free.find({i, j}) != free.end())
+                if (a[i][j] == '?')
                 {
-                    continue;
-                }
-
-                else if (trapped.find({i, j}) != trapped.end())
-                {
-                    continue;
-                }
-
-                else
-                {
-                    set<pair<int, int>> visited;
-                    int tempx = i;
-                    int tempy = j;
-                    bool istrapped = 0;
-                    bool isfree = 0;
-
-                    while ((tempx >= 0 && tempx < n) && (tempy >= 0 && tempy < m))
-                    {
-                        if ((visited.find({tempx, tempy}) != visited.end()) || (trapped.find({tempx, tempy}) != trapped.end()))
-                        {
-                            for (auto i : visited)
-                            {
-                                trapped.insert(i);
-                            }
-
-                            istrapped = 1;
-
-                            break;
-                        }
-
-                        else if (free.find({tempx, tempy}) != free.end())
-                        {
-                            for (auto i : visited)
-                            {
-                                free.insert(i);
-                            }
-
-                            isfree = 1;
-
-                            break;
-                        }
-
-                        visited.insert({tempx, tempy});
-                        if (a[tempx][tempy] == 'U')
-                        {
-                            tempx--;
-                        }
-
-                        else if (a[tempx][tempy] == 'D')
-                        {
-                            tempx++;
-                        }
-
-                        else if (a[tempx][tempy] == 'L')
-                        {
-                            tempy--;
-                        }
-
-                        else if (a[tempx][tempy] == 'R')
-                        {
-                            tempy++;
-                        }
-                    }
-
-                    if (!istrapped && !isfree)
-                    {
-                        for (auto i : visited)
-                        {
-                            free.insert(i);
-                        }
-                    }
-                }
-            }
-        }
-
-        for (int tempx = 0; tempx < n; ++tempx)
-        {
-            for (int tempy = 0; tempy < m; ++tempy)
-            {
-                if (a[tempx][tempy] == '?')
-                {
-                    if (tempx > 0 && a[tempx - 1][tempy] == 'D')
-                    {
-                        a[tempx][tempy] = 'U';
-                    }
-
-                    else if (tempx < n - 1 && a[tempx + 1][tempy] == 'U')
-                    {
-                        a[tempx][tempy] = 'D';
-                    }
-
-                    else if (tempy > 0 && a[tempx][tempy - 1] == 'R')
-                    {
-                        a[tempx][tempy] = 'L';
-                    }
-
-                    else if (tempy < m - 1 && a[tempx][tempy + 1] == 'L')
-                    {
-                        a[tempx][tempy] = 'R';
-                    }
-
-                    // checking for ?
-
-                    else if (tempx > 0 && a[tempx - 1][tempy] == '?')
-                    {
-                        a[tempx][tempy] = 'U';
-                    }
-
-                    else if (tempx < n - 1 && a[tempx + 1][tempy] == '?')
-                    {
-                        a[tempx][tempy] = 'D';
-                    }
-
-                    else if (tempy > 0 && a[tempx][tempy - 1] == '?')
-                    {
-                        a[tempx][tempy] = 'L';
-                    }
-
-                    else if (tempy < m - 1 && a[tempx][tempy + 1] == '?')
-                    {
-                        a[tempx][tempy] = 'R';
-                    }
-
-                    // trapped checking
-
-                    else if (tempx > 0 && trapped.find({tempx - 1, tempy}) != trapped.end())
-                    {
-                        a[tempx][tempy] = 'U';
-                    }
-
-                    else if (tempx < n - 1 && trapped.find({tempx + 1, tempy}) != trapped.end())
-                    {
-                        a[tempx][tempy] = 'D';
-                    }
-
-                    else if (tempy > 0 && trapped.find({tempx, tempy - 1}) != trapped.end())
-                    {
-                        a[tempx][tempy] = 'L';
-                    }
-
-                    else if (tempy < m - 1 && trapped.find({tempx, tempy + 1}) != trapped.end())
-                    {
-                        a[tempx][tempy] = 'R';
-                    }
-
+                    if (i > 0 && (bad[i - 1][j] == 0))
+                        continue;
+                    else if (i < n - 1 && (bad[i + 1][j] == 0))
+                        continue;
+                    else if (j > 0 && (bad[i][j - 1] == 0))
+                        continue;
+                    else if (j < m - 1 && (bad[i][j + 1] == 0))
+                        continue;
                     else
-                    {
-                        a[tempx][tempy] = 'R';
-                    }
+                        bad[i][j] = 1;
                 }
             }
         }
 
-        for (int i = 0; i < n; ++i)
-        {
-            for (int j = 0; j < m; ++j)
-            {
-                if (free.find({i, j}) != free.end())
-                {
-                    continue;
-                }
+        int ans = 0;
 
-                else if (trapped.find({i, j}) != trapped.end())
-                {
-                    continue;
-                }
+        for (auto i : bad)
+            for (auto j : i)
+                if (!(j))
+                    ans++;
 
-                else
-                {
-                    set<pair<int, int>> visited;
-                    int tempx = i;
-                    int tempy = j;
-                    bool istrapped = 0;
-                    bool isfree = 0;
-
-                    while ((tempx >= 0 && tempx < n) && (tempy >= 0 && tempy < m))
-                    {
-                        if ((visited.find({tempx, tempy}) != visited.end()) || (trapped.find({tempx, tempy}) != trapped.end()))
-                        {
-                            for (auto i : visited)
-                            {
-                                trapped.insert(i);
-                            }
-
-                            istrapped = 1;
-
-                            break;
-                        }
-
-                        else if (free.find({tempx, tempy}) != free.end())
-                        {
-                            for (auto i : visited)
-                            {
-                                free.insert(i);
-                            }
-
-                            isfree = 1;
-
-                            break;
-                        }
-
-                        visited.insert({tempx, tempy});
-                        if (a[tempx][tempy] == 'U')
-                        {
-                            tempx--;
-                        }
-
-                        else if (a[tempx][tempy] == 'D')
-                        {
-                            tempx++;
-                        }
-
-                        else if (a[tempx][tempy] == 'L')
-                        {
-                            tempy--;
-                        }
-
-                        else if (a[tempx][tempy] == 'R')
-                        {
-                            tempy++;
-                        }
-                    }
-
-                    if (!istrapped && !isfree)
-                    {
-                        for (auto i : visited)
-                        {
-                            free.insert(i);
-                        }
-                    }
-                }
-            }
-        }
-
-        for (auto i : a)
-            cout << i << '\n';
-
-        // for (auto i : trapped)
-        //     cout << '{' << i.first << ' ' << i.second << "} ";
-        // cout << '\n';
-        // for (auto i : free)
-        //     cout << '{' << i.first << ' ' << i.second << "} ";
-        // cout << '\n';
-
-        cout << trapped.size() << '\n';
+        cout << ans << '\n';
     }
 
     return 0;
