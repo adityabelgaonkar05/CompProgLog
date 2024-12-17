@@ -1,28 +1,50 @@
 #include <bits/stdc++.h>
 #define int long long
-#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
-
+// this is actually hard version ka code
 int32_t main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
-    
-    int t; cin >> t;
-    while(t--)
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--)
     {
-        int l = 1, r = 999;
-        int mid;
-        while(l < r)
+        int l = 2, r = 999;
+        int ans = 999;
+
+        while (l < r)
         {
-            mid = l + (r - l) / 2;
-            cout << '?' << l << r << '\n';
-            int res; cin >> res;
-            if(res == l * r) l  = mid;
-            else if(res < l * r) r = mid - 1;
+            int f = l + (r - l) / 3;
+            int s = l + (r - l) / 3 * 2;
+
+            cout << "? " << f << ' ' << s << endl;
+
+            int y;
+            cin >> y;
+
+            if ((f + 1) * (s + 1) == y)
+            {
+                r = f;
+                ans = min(ans, f);
+            }
+
+            else if (f * (s + 1) == y)
+            {
+                l = f + 1;
+                r = s;
+                ans = min(ans, s);
+            }
+
+            else
+            {
+                l = s + 1;
+            }
         }
 
-        cout << '!' << mid << '\n';
+        cout << "! " << ans << endl;
     }
 
     return 0;
