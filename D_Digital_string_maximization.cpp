@@ -15,6 +15,27 @@ int32_t main()
   {
     string s;
     cin >> s;
+    int n = s.size();
+
+    for (int i = 0; i < n; ++i)
+    {
+      int j = i;
+      while (j > 0)
+      {
+        if (s[j] > s[j - 1] + 1)
+        {
+          swap(s[j], s[j - 1]);
+          s[j - 1]--;
+        }
+
+        else
+          break;
+
+        j--;
+      }
+    }
+
+    cout << s << '\n';
   }
 
   return 0;

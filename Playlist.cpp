@@ -15,17 +15,39 @@ int32_t main()
     for (auto &i : a)
         cin >> i;
 
-    int ans = 0;
-    map<int, int> mp;
-    int l = 0;
+    // sort(a.begin(), a.end());
 
-    for (int i = 0; i < n; ++i)
+    map<int, int> mp;
+    mp[a[0]]++;
+
+    int maxlen = 1;
+
+    int right = 1;
+    int left = 0;
+
+    while (right < n)
     {
-        if(mp[a[i]])
+        if (mp[a[right]])
         {
-            
+            while (mp[a[right]])
+            {
+                mp[a[left]] = 0;
+                left++;
+            }
+
+            mp[a[right]] = 1;
         }
+
+        else
+        {
+            mp[a[right]] = 1;
+        }
+
+        maxlen = max(maxlen, right - left + 1);
+        right++;
     }
+
+    cout << maxlen << '\n';
 
     return 0;
 }
