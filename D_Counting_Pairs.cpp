@@ -13,9 +13,20 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n;
-        cin >> n;
+        int n, x, y;
+        cin >> n >> x >> y;
         vector<int> a(n);
+
+        int sum = 0;
+        for (auto &i : a)
+        {
+            cin >> i;
+            sum += i;
+        }
+
+        int ans = 0;
+
+                cout << ans << '\n';
     }
 
     return 0;

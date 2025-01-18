@@ -13,9 +13,12 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n;
-        cin >> n;
-        vector<int> a(n);
+        int n, a, b;
+        cin >> n >> a >> b;
+        if (abs(a - b) & 1)
+            cout << "NO\n";
+        else
+            cout << "YES\n";
     }
 
     return 0;

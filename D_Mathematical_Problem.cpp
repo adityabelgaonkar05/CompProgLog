@@ -1,79 +1,53 @@
 #include <bits/stdc++.h>
 #define int long long
+#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
 
 int32_t main()
 {
-    ios_base::sync_with_stdio(false); cin.tie(NULL);
-    
-    int t; cin >> t;
-    while(t--)
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t;
+    cin >> t;
+    while (t--)
     {
-        int n; cin >> n;
-        string s; cin >> s;
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
 
-        int ind = 0;
-        int minitwo = 99;
-        
-        for(int i = 0; i < n-1; ++i)
+        int lowest = INT64_MAX;
+
+        for (int i = 0; i < n - 1; ++i)
         {
-            string rp = "0";
-            rp.push_back(s[i]);
-            rp.push_back(s[i + 1]);
-            if(stoi(rp) < minitwo)
+            string temp = "0";
+            temp.push_back(s[i]);
+            temp.push_back(s[i + 1]);
+            int curr = stoi(temp);
+            // cerr << curr << '\n';
+
+            for (int j = 0; j < n; ++j)
             {
-                minitwo = stoi(rp);
-                ind = i;
-            }
-        }
-        
-        if(minitwo == 0)
-        {
-            cout << 0 << '\n';
-        }
-
-        else if(n == 2)
-        {
-            cout << minitwo << '\n';
-        }
-
-        else if(n == 3)
-        {
-            if(s[0] == '0' or s[2] == '0') cout << 0 << '\n';
-            else
-            {
-                s.erase(ind, 1);
-                s.erase(ind, 1);
-
-                string rp = "0";
-                rp.push_back(s[0]);
-                
-                cout << min(minitwo + stoi(rp), minitwo * stoi(rp)) << '\n';
-            }
-        }
-
-        else
-        {
-            if(find(s.begin(), s.end(), '0') != s.end()) cout << 0 << '\n';
-            else
-            {
-                s.erase(ind, 1);
-                s.erase(ind, 1);
-
-                for(char i : s)
+                if (j == i)
                 {
-                    if(i != '1')
-                    {
-                        string rp = "0";
-                        rp.push_back(i);
-                        minitwo = min(minitwo + stoi(rp), minitwo * stoi(rp));
-                    }
+                    ++j;
+                    continue;
                 }
 
-                cout << minitwo << '\n';
+                string toadd = "0";
+                toadd.push_back(s[j]);
+                int mult = curr * stoi(toadd);
+                int add = curr + stoi(toadd);
+
+                curr = min(mult, add);
             }
+
+            lowest = min(lowest, curr);
         }
+
+        cout << lowest << '\n';
     }
 
     return 0;

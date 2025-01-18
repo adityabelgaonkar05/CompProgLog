@@ -11,25 +11,30 @@ int32_t main()
 
     int t;
     cin >> t;
-    // vector<int> dp(100010, 0);
     while (t--)
     {
         int n;
         cin >> n;
-        int ans = 1;
-        // if (dp[n])
-        //     cout << dp[n] << '\n';
-        // else
-        // {
-        for (int i = 2; i <= n; i = i * 2 + 1)
+        int ans = 0;
+        int currtotal = 0;
+
+        if (n == 1)
+            cout << 1 << '\n';
+        else if (n <= 4)
+            cout << 2 << '\n';
+        else
         {
-            ans++;
+            currtotal = 4;
+            ans = 2;
+            while (currtotal < n)
+            {
+                currtotal *= 2;
+                currtotal += 2;
+                ans++;
+            }
+            cout << ans << '\n';
         }
-        // dp[n] = ans;
-        cout << ans << '\n';
-        // }
     }
 
     return 0;
-    *
 }
