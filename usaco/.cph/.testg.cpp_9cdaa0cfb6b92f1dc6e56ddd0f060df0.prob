@@ -1,0 +1,1 @@
+{"name":"Local: testg","url":"c:\\repos\\CompProgLog\\usaco\\testg.cpp","tests":[{"id":1743185603815,"input":"3 3\n0 2 3\n1 3 2\n1 1 0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\repos\\CompProgLog\\usaco\\testg.cpp","group":"local","local":true}

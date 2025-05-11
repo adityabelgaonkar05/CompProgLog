@@ -1,0 +1,1 @@
+{"name":"Local: tester","url":"c:\\repos\\CompProgLog\\usaco\\tester.cpp","tests":[{"id":1743186038232,"input":"4\ncode anagrams doce anagrasm","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\repos\\CompProgLog\\usaco\\tester.cpp","group":"local","local":true}
