@@ -18,75 +18,49 @@ int32_t main()
         vector<int> a(n);
         for (auto &i : a)
             cin >> i;
+
         int ideal = 0;
 
-        for (int i = 29; i >= 0; --i)
+        for (int i = 0; i <= 29; ++i)
         {
-            int c = 0;
+            int count = 0;
 
-            for (auto x : a)
+            for (int x : a)
             {
                 if ((1 << i) & x)
-                    c++;
+                {
+                    count++;
+                }
             }
 
-            if (!(c & 1))
+            if (!(count & 1))
                 ideal += (1 << i);
         }
 
-        int maxs = INT_MIN;
         int ans = a[0];
+        int score = INT64_MIN;
 
         for (auto x : a)
         {
-            int score = 0;
+            int curr = 0;
 
-            for (int i = 29; i >= 0; --i)
+            for (int i = 0; i < 30; ++i)
             {
-                int tocheck = (1 << i);
-                if ((ideal & tocheck) && (x & tocheck))
+                if (((1 << i) & ideal) == ((1 << i) & x))
                 {
-                    score += tocheck;
+                    curr += (1 << i);
                 }
-                else if (!(ideal & tocheck) && !(x & tocheck))
-                {
-                    score += tocheck;
-                }
-                else
-                    score -= tocheck;
             }
 
-            if (score == maxs)
+            if (score <= curr)
             {
-                ans = max(ans, x);
-            }
-
-            if (score > maxs)
-            {
-                maxs = score;
                 ans = x;
+                score = curr;
             }
-
-            cout << score << ' ';
         }
 
-        int sol = 0;
-
-        // cout << ans << ' ';
-
-        for (auto i : a)
-        {
-            sol += (i ^ ans);
-        }
-
-        cout << sol << '\n';
+        cout << ans << '\n';
     }
 
     return 0;
 }
-
-[ "A", "B", "C", "E" ],
-    [ "S", "F", "E", "S" ],
-    [ "A", "D", "E", "E" ]
-
-    "ABCESEEEFS"
