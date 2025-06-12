@@ -13,25 +13,22 @@ int32_t main()
     cin >> t;
     while (t--)
     {
-        int n;
-        cin >> n;
+        int n, k;
+        cin >> n >> k;
         vector<int> a(n);
         for (auto &i : a)
             cin >> i;
 
-        int ans = a.back();
+        sort(a.rbegin(), a.rend());
 
-        for (int i = n - 2; i >= 0; ++i)
+        int ans = 0;
+
+        for (int i = 0; i < k + 1; ++i)
         {
-            if (a[i] <= ans)
-            {
-                ans++;
-            }
-            else if (a[i] > ans)
-            {
-                if (ans)
-            }
+            ans += a[i];
         }
+
+        cout << ans << '\n';
     }
 
     return 0;

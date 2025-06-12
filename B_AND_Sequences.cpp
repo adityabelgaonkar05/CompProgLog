@@ -9,6 +9,21 @@ int32_t main()
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
+    // vector<int> precomp;
+
+    // for (int i = 0; i < 200010; ++i)
+    // {
+    //     if (i == 0)
+    //         precomp.push_back(1);
+    //     else
+    //     {
+    //         int top = i * precomp.back();
+    //         top %= 1000000007;
+
+    //         precomp.push_back(top);
+    //     }
+    // }
+
     int t;
     cin >> t;
     while (t--)
@@ -19,19 +34,7 @@ int32_t main()
         for (auto &i : a)
             cin >> i;
 
-        int ans = a.back();
-
-        for (int i = n - 2; i >= 0; ++i)
-        {
-            if (a[i] <= ans)
-            {
-                ans++;
-            }
-            else if (a[i] > ans)
-            {
-                if (ans)
-            }
-        }
+        // find number pairs such that their AND is zero
     }
 
     return 0;

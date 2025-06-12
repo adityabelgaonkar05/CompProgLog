@@ -19,19 +19,24 @@ int32_t main()
         for (auto &i : a)
             cin >> i;
 
-        int ans = a.back();
+        int ans = INT64_MAX;
 
-        for (int i = n - 2; i >= 0; ++i)
+        int l = 0, r = 0;
+
+        while (l < n && r < n)
         {
-            if (a[i] <= ans)
+            if (a[l] == a[r])
             {
-                ans++;
+                ans = min(l * a[l] + (n - r - 1) * a[r], ans);
+                r++;
             }
-            else if (a[i] > ans)
+            else
             {
-                if (ans)
+                l++;
             }
         }
+
+        cout << ans << '\n';
     }
 
     return 0;

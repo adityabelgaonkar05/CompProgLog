@@ -16,21 +16,26 @@ int32_t main()
         int n;
         cin >> n;
         vector<int> a(n);
+        vector<pair<int, int>> p(n);
+
         for (auto &i : a)
             cin >> i;
+        for (auto &i : p)
+            cin >> i.first >> i.second;
 
-        int ans = a.back();
+        vector<pair<int, int>> pos;
 
-        for (int i = n - 2; i >= 0; ++i)
+        int low = 0, hi = 0;
+
+        for (int i = 0; i < n; ++i)
         {
-            if (a[i] <= ans)
+            if (a[i] == -1 || a[i] == 1)
             {
-                ans++;
+                low = max(0ll, low - 1);
+                hi++;
             }
-            else if (a[i] > ans)
-            {
-                if (ans)
-            }
+
+            pos.push_back({low, high});
         }
     }
 

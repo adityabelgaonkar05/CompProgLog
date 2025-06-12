@@ -16,27 +16,33 @@ int32_t main()
         int n, k;
         cin >> n >> k;
 
-        int l = k, r = k + n - 1;
-        int rhs = r;
-        int ans = INT64_MAX;
+        int l = k, r = n + k - 1;
+        int rr = r;
+        int ans = INT_MAX;
 
-        while (l < r)
+        while (l <= r)
         {
             int mid = l + (r - l) / 2;
-            int suml = (mid * (mid + 1) / 2);
-            int sumr = (rhs * (rhs + 1) / 2);
-            sumr -= suml;
-            suml -= (k * (k - 1) / 2);
+            int left = (mid * (mid + 1) / 2) - ((k - 1) * (k) / 2);
+            int right = (rr * (rr + 1) / 2) - (mid * (mid + 1) / 2);
 
-            // cout << mid << ' ' << suml << ' ' << sumr << '\n';
-
-            ans = min(abs(suml - sumr), ans);
-            if (suml == sumr)
+            if (left == right)
+            {
+                ans = 0;
                 break;
-            else if (suml < sumr)
+            }
+
+            ans = min(abs(left - right), ans);
+
+            if (left < right)
+            {
                 l = mid + 1;
+            }
+
             else
-                r = mid;
+            {
+                r = mid - 1;
+            }
         }
 
         cout << ans << '\n';
