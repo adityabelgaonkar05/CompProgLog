@@ -15,42 +15,50 @@ int32_t main()
     {
         int l, r;
         cin >> l >> r;
-        int a = r;
-        int b = 0;
 
-        for (int i = 0; i <= 30; ++i)
+        multiset<int> setbits;
+
+        for (int i = 0; i < 30; ++i)
         {
-            if ((1 << i) > a)
-                break;
-            if (a & (1 << i))
-                continue;
-            else
-                b += (1 << i);
+            if (r & (1 << i))
+                setbits.insert(i);
+            else if (l & (1 << i))
+                setbits.insert(i);
         }
 
-        b = max(l, b);
+        int a = r, b = l;
 
         int c = 0;
-        int h = a ^ b;
 
-        for (int i = 0; i <= 30; ++i)
+        for (int i = 0; i < *setbits.rbegin(); ++i)
         {
-            if (h & (1 << i))
-                continue;
-            else
+            if (setbits.count(i) == 0 || setbits.count(i) == 1)
+            {
                 c += (1 << i);
+            }
         }
 
-        c = min(l, c);
-        if (b == c)
+        if (c <= l)
         {
-            if (b == l)
-                b++;
-            else
-                b--;
+            // recalculate c
+
+            c = l;
+
+            for (int i = 0; i < *setbits.rbegin(); ++i)
+            {
+                if (setbits.count(i) == 0 || setbits.count(i) == 1)
+                {
+                    if (c + (1 << i) < r)
+                    {
+                        c += (1 << i);
+                    }
+                    else
+                        break;
+                }
+            }
         }
-        cout << b << ' ' << a << ' ' << c << '\n';
-        // cout << (a ^ b) + (b ^ c) + (a ^ c) << '\n';
+
+        cout << a << ' ' << b << ' ' << c << '\n';
     }
 
     return 0;

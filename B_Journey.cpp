@@ -1,10 +1,9 @@
 #include <bits/stdc++.h>
 #define int long long
-#define endl '\n'
 #define ab adityabelgaonkar
 using namespace std;
 
-int32_t main()
+signed main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
@@ -16,13 +15,26 @@ int32_t main()
         int n, a, b, c;
         cin >> n >> a >> b >> c;
 
-        int ans = n / (a + b + c) * 3;
-        if (ans / 3 * (a + b + c) < n)
-        {
-            ans += 1;
+        int sum = a + b + c;
+        int ans = n / sum * 3;
+        int distcovered = ans / 3 * sum;
 
-            if ((ans - 1) / 3 * (a + b + c) + a < n)
-                ans += 1;
+        // cout << distcovered << ' ';
+
+        if (distcovered < n)
+        {
+            distcovered += a;
+            ans++;
+        }
+        if (distcovered < n)
+        {
+            distcovered += b;
+            ans++;
+        }
+        if (distcovered < n)
+        {
+            distcovered += c;
+            ans++;
         }
 
         cout << ans << '\n';
