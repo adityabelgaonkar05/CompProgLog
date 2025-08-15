@@ -1,0 +1,1 @@
+{"name":"Local: adodo","url":"c:\\repos\\CompProgLog\\adodo.cpp","tests":[{"id":1752235105665,"input":"1 1 1","output":"NO"},{"id":1752235129612,"input":"5 3 2","output":"YES"},{"id":1752254328303,"input":"5 2 7","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\repos\\CompProgLog\\adodo.cpp","group":"local","local":true}

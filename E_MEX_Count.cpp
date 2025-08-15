@@ -24,6 +24,7 @@ signed main()
         }
 
         vector<int> b(a.begin(), a.end());
+
         sort(b.begin(), b.end());
 
         int mex = 0;
@@ -36,20 +37,25 @@ signed main()
                 mex++;
         }
 
-        multiset<int> alls;
+        map<int, int> freq;
 
         set<int> s(b.begin(), b.end());
 
-        for (int i : s)
-        {
+        for (auto i : s)
             if (i < mex)
-            {
-                alls.insert(mp[i]);
-            }
+                freq[mp[i]]++;
+
+        int ans = 1;
+
+        for (int i = 0; i <= n - mex; ++i)
+        {
+            ans += freq[i];
+            cout << ans << ' ';
         }
 
-        for (auto &i : alls)
+        for (int i = mex; i >= 1; --i)
             cout << i << ' ';
+
         cout << '\n';
     }
 

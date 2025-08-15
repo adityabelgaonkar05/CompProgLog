@@ -39,7 +39,8 @@ signed main()
             {
                 tree.push_back(*itr);
                 target -= *itr;
-                left--;
+                ad
+                    left--;
                 ss.erase(*itr);
             }
             else

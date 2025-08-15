@@ -1,33 +1,50 @@
 #include <bits/stdc++.h>
+#define int long long
+#define ab adityabelgaonkar
 using namespace std;
-using ll = long long;
 
-ll dp[1000001];
-
-const int MOD = 1e9 + 7;
-
-int main()
+int dfs(vector<int> &dp, vector<int> &a, int curr)
 {
-    int n, x;
-    cin >> n >> x;
-    vector<int> coins(n);
-    for (int i = 0; i < n; i++)
-    {
-        cin >> coins[i];
-    }
+    if (dp[curr] != INT_MAX)
+        return dp[curr];
 
-    for (int i = 0; i <= x; i++)
+    int sumco = INT_MAX;
+    sumco++;
+
+    for (auto i : a)
     {
-        dp[i] = INT_MAX;
-    }
-    dp[0] = 0;
-    for (int i = 1; i <= n; i++)
-    {
-        for (int weight = coins[i - 1]; weight <= x; weight++)
+        if (i <= curr)
         {
-            dp[weight] = min(dp[weight], dp[weight - coins[i - 1]] + 1);
+            sumco = min(sumco, dfs(dp, a, curr - i) + 1);
         }
     }
 
-    cout << (dp[x] == INT_MAX ? -1 : dp[x]) << endl;
+    dp[curr] = sumco;
+    return dp[curr];
+}
+
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int n, k;
+    cin >> n >> k;
+    vector<int> a(n);
+    for (auto &i : a)
+        cin >> i;
+
+    sort(a.rbegin(), a.rend());
+
+    vector<int> dp(k + 1, INT_MAX);
+    dp[0] = 0;
+
+    dfs(dp, a, k);
+
+    if (dp[k] >= INT_MAX)
+        cout << -1 << '\n';
+    else
+        cout << dp[k] << '\n';
+
+    return 0;
 }
