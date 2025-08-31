@@ -5,65 +5,64 @@ using namespace std;
 
 signed main()
 {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
 
-    vector<int> fact;
-    fact.push_back(1);
+    int MOD = 998244353;
+
+    vector<int> factorial({1});
 
     for (int i = 1; i <= 200010; ++i)
     {
-        int topush = i * fact.back() % 998244353;
-        fact.push_back(topush);
+        factorial.push_back((factorial.back() * i) % MOD);
     }
-
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
 
     int t;
     cin >> t;
     while (t--)
     {
+        vector<int> consec;
+
         string s;
         cin >> s;
 
-        int rep = 0;
-        int ans = 1;
+        int n = s.size();
 
-        int curr = 1;
-        char prev = s[0];
+        int curr = 0;
+        int ans1 = 0;
 
-        vector<int> parts;
-
-        for (int i = 1; i < s.size(); ++i)
+        for (int i = 0; i < n - 1; ++i)
         {
-            if (prev == s[i])
-            {
-                rep++;
+            if (s[i] == s[i + 1])
                 curr++;
-            }
+
             else
             {
-                prev = s[i];
-                if (curr == 1)
-                    continue;
-                parts.push_back(curr);
-                curr = 1;
+                ans1 += curr;
+                if (curr >= 1)
+                    consec.push_back(curr + 1);
+                curr = 0;
             }
         }
 
-        if (curr > 1)
-            parts.push_back(curr);
+        ans1 += curr;
+        if (curr >= 1)
+            consec.push_back(curr + 1);
 
-        int pnt = 1;
+        int ans2 = 1;
 
-        for (auto &i : parts)
+        for (auto i : consec)
         {
-            ans *= i;
-            ans %= 998244353;
-            ans *= fact[s.size() - pnt++];
-            ans %= 998244353;
+            ans2 *= i;
+            ans2 %= MOD;
         }
 
-        cout << rep << ' ' << ans << '\n';
+        // cout << '\n';
+
+        ans2 *= factorial[ans1];
+        ans2 %= MOD;
+
+        cout << ans1 << ' ' << ans2 << '\n';
     }
 
     return 0;
