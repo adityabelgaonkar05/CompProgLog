@@ -21,12 +21,15 @@ signed main()
         int maxh = 0;
         int minh = 0;
 
+        vector<pair<int, int>> pp;
+
         bool poss = 1;
 
         for (int i = 0; i < n; ++i)
         {
             int x, b;
             cin >> x >> b;
+            pp.push_back({x, b});
 
             if (a[i] == 1)
             {
@@ -37,6 +40,12 @@ signed main()
             else if (a[i] == -1)
             {
                 maxh++;
+
+                if (maxh > b)
+                {
+                    a[i] = 0;
+                    maxh--;
+                }
             }
 
             maxh = min(maxh, b);
@@ -48,10 +57,39 @@ signed main()
             }
         }
 
-        if (poss)
-            cout << "YES\n";
-        else
+        if (!poss)
+        {
             cout << "-1\n";
+            continue;
+        }
+
+        vector<int> h(n + 1);
+        h[n] = minh;
+
+        for (int i = n - 1; i >= 0; --i)
+        {
+            if (a[i] != -1)
+            {
+                h[i] = h[i + 1] - a[i];
+            }
+            else
+            {
+                if (h[i + 1] >= pp[i].first)
+                {
+                    a[i] = 1;
+                    h[i] = h[i + 1] - 1;
+                }
+                else
+                {
+                    a[i] = 0;
+                    h[i] = h[i + 1];
+                }
+            }
+        }
+
+        for (auto i : a)
+            cout << i << ' ';
+        cout << '\n';
     }
 
     return 0;
