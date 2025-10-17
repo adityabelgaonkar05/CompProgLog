@@ -15,45 +15,60 @@ signed main()
         int n;
         cin >> n;
         vector<int> a(n);
+
         for (auto &i : a)
             cin >> i;
 
-        vector<vector<int>> prefix({a[0]});
+        vector<vector<int>> sb(35);
 
-        for (auto it : a)
+        int ind = 0;
+        for (auto i : a)
         {
-            prefix.push_back(prefix.back() & i);
+            for (int j = 0; j < 33; ++j)
+            {
+                if (!(i & (1ll << j)))
+                {
+                    sb[j].push_back(ind);
+                }
+            }
+
+            ind++;
+        }
+
+        for (int j = 0; j < 33; ++j)
+        {
+            sb[j].push_back(n);
         }
 
         int q;
         cin >> q;
-
         while (q--)
-        {
-            int l, k;
-            cin >> l >> k;
+        { // first bit set in el, but not in array
+            int r;
+            int k;
+            cin >> r;
+            cin >> k;
+            int ans = 0;
 
-            l--;
-            int r = n - 1;
-
-            int ans = l;
-
-            while (l <= r)
+            for (int i = 0; i < 31; ++i)
             {
-                int mid = (l + r) / 2;
-
-                if (prefix[mid] >= k)
+                if ((1ll << i) & k)
                 {
-                    ans = mid;
-                    l = mid + 1;
+                    auto it = lower_bound(sb[i].begin(), sb[i].end(), r);
+                    ans = min(ans, *it);
                 }
-                else
+
+                else if ((1ll << i) > k)
                 {
-                    r = mid - 1;
+                    auto it = lower_bound(sb[i].begin(), sb[i].end(), r);
+                    ans = max(ans, *it);
                 }
             }
 
-            if (prefix)
+            if (ans >= r)
+                cout << ans << ' ';
+            else
+                cout << -1 << ' ';
         }
 
         cout << '\n';
