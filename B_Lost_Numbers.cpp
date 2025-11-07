@@ -3,26 +3,6 @@
 #define int long long
 using namespace std;
 
-int squareroot(int n)
-{
-    int l = 1, r = n;
-
-    while (l <= r)
-    {
-        int mid = (l + r) / 2;
-        if (mid * mid == n)
-            return mid;
-        else if (mid * mid < n)
-        {
-            l = mid + 1;
-        }
-        else
-            r = mid - 1;
-    }
-
-    return 0;
-}
-
 signed main()
 {
     ios_base::sync_with_stdio(false);
@@ -43,16 +23,87 @@ signed main()
 
     set<int> s({42, 23, 16, 15, 8, 4});
 
-    // a * b
-    // a * c
+    vector<int> a(6);
 
-    // a * b * a * c;
-
-    vector<int> ans(6);
-
-    for (auto i : s)
+    for (auto it : s)
     {
+        set<int> temp = s;
+        int tp = aintob;
+
+        if (aintob % it == 0)
+        {
+            temp.erase(it);
+            tp /= it;
+
+            bool poss = 0;
+
+            for (int i : temp)
+            {
+                if (tp % i == 0 && tp / i == 1)
+                {
+                    poss = 1;
+                    a[0] = it;
+                    a[1] = i;
+                }
+            }
+
+            if (poss)
+                break;
+        }
     }
+
+    s.erase(a[0]);
+    s.erase(a[1]);
+
+    if (aintoc % a[0] != 0 || s.find(aintoc / a[0]) == s.end())
+    {
+        swap(a[0], a[1]);
+    }
+
+    a[2] = aintoc / a[0];
+
+    s.erase(a[2]);
+
+    for (auto it : s)
+    {
+        set<int> temp = s;
+        int tp = dintoe;
+        if (dintoe % it == 0)
+        {
+            temp.erase(it);
+            tp /= it;
+
+            bool poss = 0;
+
+            for (int i : temp)
+            {
+                if (tp % i == 0 && tp / i == 1)
+                {
+                    poss = 1;
+                    a[3] = it;
+                    a[4] = i;
+                }
+            }
+
+            if (poss)
+                break;
+        }
+    }
+
+    s.erase(a[3]);
+    s.erase(a[4]);
+
+    if (dintof % a[3] != 0 || s.find(dintof / a[3]) == s.end())
+    {
+        swap(a[3], a[4]);
+    }
+
+    a[5] = *s.begin();
+
+    cout << "! ";
+    for (auto i : a)
+        cout << i << ' ';
+    cout << endl;
 
     return 0;
 }
