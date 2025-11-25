@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/adityabelgaonkar/repos/CompProgLog/A_Add_or_XOR'
+relocations:     []
+...
